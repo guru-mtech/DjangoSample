@@ -1,0 +1,26 @@
+{% extends 'pages/home.html' %}
+
+{% block content %}
+<div class='row text-center'>
+    <div class = 'col'>
+        <h3><b>Welcome to tweetme</b></h3>
+    </div>
+</div>
+
+<div clas='row mb-3'>
+    <div class='col-md-4 mx-auto col-10'>
+        <form class="form" method="POST" action = "tweet-create/">
+            {% csrf_token %}
+            <input type = 'hidden' value="/" name='next'/>
+            <textarea class = 'form-control' name= 'contant' placeholder="your tweet"></textarea>
+            <button type="submit" class="btn btn-primary"> Tweet</button>
+        </form>
+    </br>
+    </br>
+    </div>
+</div>
+<div class = 'row' id='tweets'>
+    loading...
+  </div>
+{% endblock content %}
+

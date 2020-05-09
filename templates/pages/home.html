@@ -1,0 +1,79 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Tweet me</title>
+  </head>
+
+  <style>
+    .bg-tweetme {
+      background-color: #be1f1f !important;
+    }
+  </style>
+  <body>
+      {% include "components/navBar.html" %}
+
+       
+       <div class='container'>
+         {% block content %}
+         {% endblock content %}
+      </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+<script>
+
+  function handleDidLike(tweet_id,currentCount){
+    console.log(tweet_id,currentCount);
+    return currentCount += 1
+  }
+    function likeButon(tweet){
+      return "<button class='btn btn-primary btn-sm' onclick='handleDidLike("+tweet.id+","+tweet.likes+")'>"+ tweet.likes +" Likes </button>"
+    }
+
+    function get_formattedString(tweet)
+    {
+        var formattedString = "<div class = 'col-12 col-md-10 mx-auto border rounded py-3 mb-4 tweet' id=tweet-"+tweet.id+">"+ "<p>" + tweet.content + "</p>"+
+        "<div class=btn-group>"+likeButon(tweet)+"</div></div>"
+        "</div>"
+        return formattedString
+    }
+
+    
+  const ListVw = document.getElementById('tweets')
+  ListVw.innerHTML = "loading ..."
+  const xhr = new XMLHttpRequest()
+  const method = "GET"
+  const url = "http://127.0.0.1:8000/global"
+  const responceType = "json"
+
+  xhr.responseType = responceType
+  xhr.open(method,url)
+
+  xhr.onload = function(){
+    const serverResponce = xhr.response
+    const allTweets = serverResponce.response
+    var finalHtml = ""
+    for(var i=0;i<allTweets.length;i++)
+    {
+        str = get_formattedString(allTweets[i])
+        finalHtml += str
+    }
+
+    ListVw.innerHTML = finalHtml
+  }
+  xhr.send()
+</script>
