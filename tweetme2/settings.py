@@ -25,7 +25,9 @@ SECRET_KEY = '=8+jbwhc4@=_w-hv)qbk(dyh7tpcc=b$*f#te6j0-5&i+miehv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['tweetmewaioz.herokuapp.com']
+ALLOWED_HOSTS = ['tweetmewaioz.herokuapp.com',
+'127.0.0.1',
+]
 
 
 # Application definition
